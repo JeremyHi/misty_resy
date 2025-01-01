@@ -1,36 +1,97 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Misty: Your Personal AI Reservations Assistant
 
-## Getting Started
+Misty is a web application that automates the process of making restaurant reservations through Resy. It helps users secure hard-to-get reservations by automatically attempting to book their desired time slots.
 
-First, run the development server:
+## Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- Secure authentication with Supabase
+- Automated Resy credential management with encryption
+- Real-time reservation tracking dashboard
+- Multiple time slot preferences for reservations
+- Automated booking attempts for desired reservation times
+- Booking status monitoring and notifications
+
+## Tech Stack
+
+- **Frontend**: Next.js 15.1.3, React 19
+- **Styling**: Tailwind CSS
+- **Authentication**: Supabase Auth
+- **Database**: Supabase PostgreSQL
+- **API Integration**: Resy API
+- **Type Safety**: TypeScript
+
+## Prerequisites
+
+- Node.js >= 18.17.0
+- npm or yarn
+- Supabase account
+- Resy API credentials
+
+## Environment Variables
+
+Create a `.env.local` file with:
+
+```
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+NEXT_PUBLIC_RESY_API_KEY=your_resy_api_key
+REACT_APP_ENCRYPTION_KEY=your_encryption_key
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Setup
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. Clone the repository:
+```bash
+git clone https://github.com/yourusername/misty_resy.git
+cd misty_resy
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+2. Install dependencies:
+```bash
+npm install
+```
 
-## Learn More
+3. Initialize the database:
+```bash
+npx supabase init
+```
 
-To learn more about Next.js, take a look at the following resources:
+4. Run database migrations:
+```sql
+npx supabase db push
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+5. Start the development server:
+```bash
+npm run dev
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+The application will be available at `http://localhost:3000`.
 
-## Deploy on Vercel
+## Project Structure
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- `/src/app` - Next.js 13+ app router pages and API routes
+- `/src/components` - React components
+- `/src/lib` - Utility functions and service configurations
+- `/src/utils` - Helper functions
+- `/supabase` - Database schema and migrations
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Database Schema
+
+The application uses three main tables:
+
+- `resy_credentials` - Stores encrypted Resy login information
+- `restaurants` - Restaurant information and Resy venue IDs
+- `reservation_requests` - Tracks reservation attempts and status
+
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch: `git checkout -b feature/my-feature`
+3. Commit your changes: `git commit -am 'Add new feature'`
+4. Push to the branch: `git push origin feature/my-feature`
+5. Submit a pull request
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.

@@ -64,6 +64,14 @@ const Navbar = () => {
                             >
                                 FAQ
                             </a>
+                            {isLoggedIn && (
+                                <button
+                                    onClick={() => router.push('/profile')}
+                                    className="text-gray-600 hover:text-gray-900"
+                                >
+                                    Profile
+                                </button>
+                            )}
                         </div>
 
                         {isLoggedIn ? (

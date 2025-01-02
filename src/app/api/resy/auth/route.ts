@@ -8,12 +8,15 @@ export async function POST(request: Request) {
         const response = await fetch('https://api.resy.com/3/auth/password', {
             method: 'POST',
             headers: {
+                'accept': 'application/json, text/plain, */*',
                 'authority': 'api.resy.com',
-                'accept': 'application/json',
                 'authorization': `ResyAPI api_key="${process.env.NEXT_PUBLIC_RESY_API_KEY}"`,
+                'cache-control': 'no-cache',
                 'content-type': 'application/x-www-form-urlencoded',
+                'dnt': '1',
                 'origin': 'https://resy.com',
                 'referer': 'https://resy.com/',
+                'x-origin': 'https://resy.com'
             },
             body: new URLSearchParams(body)
         })

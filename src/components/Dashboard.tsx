@@ -2,24 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabase';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import Navbar from '@/components/Navbar';
-
-interface Request {
-    id: string;
-    party_size: number;
-    desired_date: string;
-    desired_times: string[];
-    booking_reference?: string;
-    status: string;
-    created_at: string;
-    user_id: string;
-    restaurants: Restaurant;
-}
-
-interface Restaurant {
-    id: string;
-    name: string;
-    thumbnail_url?: string;
-}
+import { ReservationRequest, Restaurant } from '@/types/reservation';
 
 const formatTime = (time: string): string => {
     return new Date(`2000-01-01T${time}`).toLocaleTimeString('en-US', {
@@ -28,7 +11,7 @@ const formatTime = (time: string): string => {
     });
 };
 
-const ReservationTile = ({ request, restaurant }: { request: Request; restaurant: Restaurant }) => {
+const ReservationTile = ({ request, restaurant }: { request: ReservationRequest; restaurant: Restaurant }) => {
     return (
         <Card className="w-full max-w-sm hover:shadow-lg transition-shadow duration-200">
             <CardHeader className="space-y-1">
@@ -73,8 +56,8 @@ const ReservationTile = ({ request, restaurant }: { request: Request; restaurant
 };
 
 const Dashboard = () => {
-    const [activeRequests, setActiveRequests] = useState<Request[]>([]);
-    const [pastRequests, setPastRequests] = useState<Request[]>([]);
+    const [activeRequests, setActiveRequests] = useState<ReservationRequest[]>([]);
+    const [pastRequests, setPastRequests] = useState<ReservationRequest[]>([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -86,23 +69,25 @@ const Dashboard = () => {
                 const { data: activeData } = await supabase
                     .from('reservation_requests')
                     .select(`
-            *,
-            restaurants (*)
-          `)
+                        *,
+                        restaurants (*)
+                    `)
                     .eq('user_id', user!.id)
                     .eq('status', 'active')
-                    .order('created_at', { ascending: false });
+                    .order('created_at', { ascending: false })
+                    .returns<ReservationRequest[]>();
 
                 // Fetch past requests
                 const { data: pastData } = await supabase
                     .from('reservation_requests')
                     .select(`
-            *,
-            restaurants (*)
-          `)
+                        *,
+                        restaurants (*)
+                    `)
                     .eq('user_id', user!.id)
                     .in('status', ['successful', 'expired'])
-                    .order('created_at', { ascending: false });
+                    .order('created_at', { ascending: false })
+                    .returns<ReservationRequest[]>();;
 
                 setActiveRequests(activeData || []);
                 setPastRequests(pastData || []);

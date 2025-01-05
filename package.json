@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
+    "sandbox": "NEXT_PUBLIC_ENV=prod next dev --turbopack",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"

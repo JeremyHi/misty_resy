@@ -32,17 +32,16 @@ const ResyCredentialsModal: React.FC<ResyCredentialsModalProps> = ({ onClose, on
             }
 
             const { data: { user } } = await supabase.auth.getUser();
-            if (!user) throw new Error('No user found');
-
-            const { error: dbError } = await supabase
-                .from('resy_credentials')
-                .upsert({
-                    user_id: user.id,
-                    email,
-                    encrypted_password: password // Note: Use proper encryption in production
-                });
-
-            if (dbError) throw dbError;
+            if (user) {
+                const { error: dbError } = await supabase
+                    .from('resy_credentials')
+                    .upsert({
+                        user_id: user.id,
+                        email,
+                        encrypted_password: password // Note: Use proper encryption in production
+                    });
+                if (dbError) throw dbError;
+            }
             onSuccess();
         } catch (err: any) {
             setError(err.message);

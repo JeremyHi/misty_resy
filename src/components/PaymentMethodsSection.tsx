@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { supabase } from '@/lib/supabase';
 import { CreditCard, Wallet } from 'lucide-react';
+import AddPaymentMethodModal from './AddPaymentMethodModal';
 
 const PaymentMethodsSection = () => {
     const [paymentMethods, setPaymentMethods] = useState<PaymentMethod[]>([]);
@@ -55,9 +56,10 @@ const PaymentMethodsSection = () => {
     }
 
     const renderPaymentMethod = (method: PaymentMethod) => {
-        const getIcon = (): JSX.Element | null => {
+        const getIcon = () => {
             switch (method.type) {
                 case 'apple_pay':
+                    return <CreditCard className="w-6 h-6" />;
                 case 'stripe':
                     return <CreditCard className="w-6 h-6" />;
                 case 'coinbase':
@@ -67,13 +69,13 @@ const PaymentMethodsSection = () => {
             }
         };
 
-        const getDisplayText = (): string => {
+        const getDisplayText = () => {
             switch (method.type) {
                 case 'apple_pay':
                 case 'stripe':
                     return `${method.card_type} ending in ${method.last_four}`;
                 case 'coinbase':
-                    return `${method.wallet_address?.slice(0, 6)}...${method.wallet_address?.slice(-4)}`;
+                    return method.wallet_address ? `${method.wallet_address.slice(0, 6)}...${method.wallet_address.slice(-4)}` : '';
                 default:
                     return '';
             }
@@ -115,6 +117,15 @@ const PaymentMethodsSection = () => {
                     Add Payment Method
                 </Button>
             </CardContent>
+            {showLinkModal && (
+                <AddPaymentMethodModal
+                    onClose={() => setShowLinkModal(false)}
+                    onSuccess={() => {
+                        setShowLinkModal(false);
+                        fetchPaymentMethods();
+                    }}
+                />
+            )}
         </Card>
     );
 };

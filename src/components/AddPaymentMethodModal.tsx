@@ -39,13 +39,13 @@ const AddPaymentMethodModal: React.FC<AddPaymentMethodModalProps> = ({ onClose, 
     return (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
             <Card className="w-full max-w-md bg-white rounded-lg p-6">
-                <h2 className="text-xl font-bold mb-4">Add Payment Method</h2>
+                <h2 className="text-xl font-bold mb-4 text-gray-600">Add Payment Method</h2>
                 <div className="space-y-4">
                     {paymentOptions.map((option) => (
                         <button
                             key={option.type}
                             onClick={option.handler}
-                            className="w-full flex items-center justify-between p-4 border rounded-lg hover:bg-gray-50 transition-colors"
+                            className="w-full flex items-center justify-between p-4 border text-gray-600 rounded-lg hover:bg-gray-50 transition-colors"
                         >
                             <div className="flex items-center space-x-3">
                                 {option.icon}

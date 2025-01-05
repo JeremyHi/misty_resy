@@ -100,3 +100,18 @@ VALUES (
         '789',
         'https://static01.nyt.com/images/2018/07/25/dining/25REST-ATOMIX1/merlin_141083557_de2f4c67-e295-4cf9-92b4-4991eba7cc20-superJumbo.jpg'
     );
+
+-- First, add the new columns to the resy_credentials table
+ALTER TABLE resy_credentials
+ADD COLUMN token TEXT,
+    ADD COLUMN refresh_token TEXT,
+    ADD COLUMN legacy_token TEXT,
+    ADD COLUMN profile_image_url TEXT;
+
+-- Update existing records to have NULL values for new columns
+UPDATE resy_credentials
+SET token = NULL,
+    refresh_token = NULL,
+    legacy_token = NULL,
+    profile_image_url = NULL
+WHERE token IS NULL;

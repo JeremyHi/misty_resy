@@ -18,11 +18,20 @@ export const ResyCredentialsForm: React.FC = () => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({
-                    email,
-                    password
-                })
+                body: JSON.stringify({ email, password })
             });
+
+            const { data: { user } } = await supabase.auth.getUser();
+            if (user) {
+                const { error: dbError } = await supabase
+                    .from('resy_credentials')
+                    .upsert({
+                        user_id: user.id,
+                        email,
+                        encrypted_password: password // Note: Use proper encryption in production
+                    });
+                if (dbError) throw dbError;
+            }
 
             return response.status === 200;
         } catch (error) {

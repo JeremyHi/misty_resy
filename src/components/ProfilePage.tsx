@@ -11,6 +11,7 @@ import PaymentMethodsSection from '@/components/PaymentMethodsSection';
 interface ResyCredentials {
     email: string;
     last_used: string;
+    profile_image_url: string | null;
 }
 
 interface UserStats {
@@ -64,14 +65,15 @@ const ProfilePage = () => {
             // Fetch Resy credentials
             const { data: resyData } = await supabase
                 .from('resy_credentials')
-                .select('email, updated_at')
+                .select('email, updated_at, profile_image_url')
                 .eq('user_id', user.id)
                 .single();
 
             if (resyData) {
                 setResyCredentials({
                     email: resyData.email.replace(/(.{3}).*(@.*)/, '$1***$2'),
-                    last_used: new Date(resyData.updated_at).toLocaleDateString()
+                    last_used: new Date(resyData.updated_at).toLocaleDateString(),
+                    profile_image_url: resyData.profile_image_url
                 });
             }
 
@@ -158,20 +160,31 @@ const ProfilePage = () => {
                         </CardHeader>
                         <CardContent>
                             {resyCredentials ? (
-                                <div>
-                                    <p className="text-gray-600">Connected Account: {resyCredentials.email}</p>
-                                    <p className="text-gray-500 text-sm">Last used: {resyCredentials.last_used}</p>
-                                    <div className="mt-4">
-                                        <Button
-                                            onClick={handleUnlinkResy}
-                                            className="bg-red-600 text-white hover:bg-red-700 destructive"
-                                        >
-                                            Unlink Resy Account
-                                        </Button>
-                                    </div>
-                                    {deleteSuccess && (
-                                        <p className="mt-2 text-green-600">Resy account successfully unlinked!</p>
+                                <div className="flex items-center space-x-4">
+                                    {resyCredentials.profile_image_url && (
+                                        <div className="w-16 h-16 rounded-full overflow-hidden">
+                                            <img
+                                                src={resyCredentials.profile_image_url}
+                                                alt="Resy Profile"
+                                                className="w-full h-full object-cover"
+                                            />
+                                        </div>
                                     )}
+                                    <div>
+                                        <p className="text-gray-600">Connected Account: {resyCredentials.email}</p>
+                                        <p className="text-gray-500 text-sm">Last used: {resyCredentials.last_used}</p>
+                                        <div className="mt-4">
+                                            <Button
+                                                onClick={handleUnlinkResy}
+                                                className="bg-red-600 text-white hover:bg-red-700 destructive"
+                                            >
+                                                Unlink Resy Account
+                                            </Button>
+                                        </div>
+                                        {deleteSuccess && (
+                                            <p className="mt-2 text-green-600">Resy account successfully unlinked!</p>
+                                        )}
+                                    </div>
                                 </div>
                             ) : (
                                 <div>

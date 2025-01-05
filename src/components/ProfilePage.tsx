@@ -6,6 +6,7 @@ import Navbar from '@/components/Navbar';
 import { ReservationHistoryItem, ReservationRequest } from '@/types/reservation';
 import ResyCredentialsModal from '@/components/ResyCredentialsModal';
 import ReservationDetailsModal from '@/components/ReservationDetailsModal';
+import PaymentMethodsSection from '@/components/PaymentMethodsSection';
 
 interface ResyCredentials {
     email: string;
@@ -184,15 +185,7 @@ const ProfilePage = () => {
                     </Card>
 
                     {/* Billing Section */}
-                    <Card>
-                        <CardHeader>
-                            <CardTitle>Billing & Payments</CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                            <p className="text-gray-600 mb-4">No payment method added</p>
-                            <Button>Add Payment Method</Button>
-                        </CardContent>
-                    </Card>
+                    <PaymentMethodsSection />
 
                     {/* Stats Section */}
                     <Card>

@@ -34,6 +34,45 @@ export type Database = {
   }
   public: {
     Tables: {
+      payment_methods: {
+        Row: {
+          card_type: string | null
+          created_at: string
+          id: string
+          is_default: boolean | null
+          last_four: string | null
+          provider_payment_id: string
+          type: string
+          updated_at: string
+          user_id: string
+          wallet_address: string | null
+        }
+        Insert: {
+          card_type?: string | null
+          created_at?: string
+          id?: string
+          is_default?: boolean | null
+          last_four?: string | null
+          provider_payment_id: string
+          type: string
+          updated_at?: string
+          user_id: string
+          wallet_address?: string | null
+        }
+        Update: {
+          card_type?: string | null
+          created_at?: string
+          id?: string
+          is_default?: boolean | null
+          last_four?: string | null
+          provider_payment_id?: string
+          type?: string
+          updated_at?: string
+          user_id?: string
+          wallet_address?: string | null
+        }
+        Relationships: []
+      }
       reservation_requests: {
         Row: {
           booking_reference: string | null

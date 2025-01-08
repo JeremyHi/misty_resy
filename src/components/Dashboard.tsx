@@ -1,3 +1,4 @@
+'use client';
 import React, { useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabase';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -6,6 +7,7 @@ import Navbar from '@/components/Navbar';
 import { ReservationRequest, Restaurant } from '@/types/reservation';
 import { Plus, X } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import InstantBookSidebar from './InstantBookSidebar';
 
 const DeleteConfirmationModal = ({ isOpen, onClose, onConfirm }: { isOpen: boolean; onClose: () => void; onConfirm: () => void }) => {
     if (!isOpen) return null;
@@ -209,41 +211,51 @@ const Dashboard = () => {
         <div className="min-h-screen bg-gray-50">
             <Navbar />
             <div className="py-12 px-4 sm:px-6 lg:px-8">
-                <div className="max-w-7xl mx-auto space-y-12">
-                    <div className="bg-white rounded-lg shadow-sm p-6">
-                        <h2 className="text-2xl font-bold text-gray-900 mb-6">
-                            Current Reservation Requests
-                        </h2>
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                            {activeRequests.map((request) => (
-                                <ReservationTile
-                                    key={request.id}
-                                    request={request}
-                                    restaurant={request.restaurants}
-                                    onDelete={() => handleDeleteRequest(request.id)}
-                                />
-                            ))}
-                            <CreateRequestTile />
-                        </div>
-                    </div>
-
-                    <div className="bg-white rounded-lg shadow-sm p-6">
-                        <h2 className="text-2xl font-bold text-gray-900 mb-6">
-                            Past Reservations
-                        </h2>
-                        {pastRequests.length === 0 ? (
-                            <p className="text-gray-600">No past reservations</p>
-                        ) : (
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                                {pastRequests.map((request) => (
-                                    <ReservationTile
-                                        key={request.id}
-                                        request={request}
-                                        restaurant={request.restaurants}
-                                    />
-                                ))}
+                <div className="max-w-7xl mx-auto">
+                    <div className="flex gap-8">
+                        {/* Main content area */}
+                        <div className="flex-1 space-y-12">
+                            <div className="bg-white rounded-lg shadow-sm p-6">
+                                <h2 className="text-2xl font-bold text-gray-900 mb-6">
+                                    Current Reservation Requests
+                                </h2>
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    {activeRequests.map((request) => (
+                                        <ReservationTile
+                                            key={request.id}
+                                            request={request}
+                                            restaurant={request.restaurants}
+                                            onDelete={() => handleDeleteRequest(request.id)}
+                                        />
+                                    ))}
+                                    <CreateRequestTile />
+                                </div>
                             </div>
-                        )}
+
+                            <div className="bg-white rounded-lg shadow-sm p-6">
+                                <h2 className="text-2xl font-bold text-gray-900 mb-6">
+                                    Past Reservations
+                                </h2>
+                                {pastRequests.length === 0 ? (
+                                    <p className="text-gray-600">No past reservations</p>
+                                ) : (
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                        {pastRequests.map((request) => (
+                                            <ReservationTile
+                                                key={request.id}
+                                                request={request}
+                                                restaurant={request.restaurants}
+                                            />
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+
+                        {/* Sidebar */}
+                        <div className="w-96">
+                            <InstantBookSidebar />
+                        </div>
                     </div>
                 </div>
             </div>

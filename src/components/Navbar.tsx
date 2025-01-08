@@ -6,6 +6,7 @@ import { Button } from './ui/button';
 const Navbar = () => {
     const router = useRouter();
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [isAdmin, setIsAdmin] = useState(false);
 
     useEffect(() => {
         checkUser();
@@ -20,6 +21,7 @@ const Navbar = () => {
     const checkUser = async () => {
         const { data: { user } } = await supabase.auth.getUser();
         setIsLoggedIn(!!user);
+        setIsAdmin(!!user?.user_metadata.is_admin);
     };
 
     const handleHomeClick = () => {
@@ -65,14 +67,24 @@ const Navbar = () => {
                                 FAQ
                             </a>
                             {isLoggedIn && (
-                                <button
-                                    onClick={() => router.push('/profile')}
-                                    className="text-gray-600 hover:text-gray-900"
-                                >
-                                    Profile
-                                </button>
+                                <>
+                                    <button
+                                        onClick={() => router.push('/profile')}
+                                        className="text-gray-600 hover:text-gray-900"
+                                    >
+                                        Profile
+                                    </button>
+                                </>
                             )}
                         </div>
+                        {isAdmin && (
+                            <Button
+                                onClick={() => router.push('/admin')}
+                                className="bg-cyan-600 hover:bg-cyan-700"
+                            >
+                                Admin Tools
+                            </Button>
+                        )}
 
                         {isLoggedIn ? (
                             <Button

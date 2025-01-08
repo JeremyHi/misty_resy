@@ -8,7 +8,12 @@ export async function POST(request: Request) {
     try {
         const { data, error } = await supabase.auth.signUp({
             email: body.email,
-            password: body.password
+            password: body.password,
+            options: {
+                data: {
+                    is_admin: false,
+                },
+            }
         })
 
         if (error) throw error

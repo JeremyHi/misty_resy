@@ -125,6 +125,7 @@ export type Database = {
           created_at: string
           id: string
           name: string
+          reservation_open_time: string | null
           resy_venue_id: string
           thumbnail_url: string | null
         }
@@ -132,6 +133,7 @@ export type Database = {
           created_at?: string
           id?: string
           name: string
+          reservation_open_time?: string | null
           resy_venue_id: string
           thumbnail_url?: string | null
         }
@@ -139,6 +141,7 @@ export type Database = {
           created_at?: string
           id?: string
           name?: string
+          reservation_open_time?: string | null
           resy_venue_id?: string
           thumbnail_url?: string | null
         }

@@ -115,3 +115,56 @@ SET token = NULL,
     legacy_token = NULL,
     profile_image_url = NULL
 WHERE token IS NULL;
+
+CREATE POLICY "Users can read their own admin status" ON auth.users FOR
+SELECT USING (auth.uid() = id);
+
+-- First drop any existing policies for INSERT on restaurants
+DROP POLICY IF EXISTS "Only admins can insert restaurants" ON restaurants;
+
+-- Create the new policy checking raw_user_meta_data
+CREATE POLICY "Only admins can insert restaurants" ON restaurants FOR
+INSERT WITH CHECK (
+        EXISTS (
+            SELECT 1
+            FROM auth.users
+            WHERE auth.uid() = id
+                AND raw_user_meta_data->>'is_admin' = 'true'
+        )
+    );
+
+-- Similarly for UPDATE
+DROP POLICY IF EXISTS "Only admins can update restaurants" ON restaurants;
+
+CREATE POLICY "Only admins can update restaurants" ON restaurants FOR
+UPDATE USING (
+        EXISTS (
+            SELECT 1
+            FROM auth.users
+            WHERE auth.uid() = id
+                AND raw_user_meta_data->>'is_admin' = 'true'
+        )
+    );
+
+-- And for DELETE
+DROP POLICY IF EXISTS "Only admins can delete restaurants" ON restaurants;
+
+CREATE POLICY "Only admins can delete restaurants" ON restaurants FOR
+DELETE USING (
+        EXISTS (
+            SELECT 1
+            FROM auth.users
+            WHERE auth.uid() = id
+                AND raw_user_meta_data->>'is_admin' = 'true'
+        )
+    );
+
+CREATE POLICY "Admins can insert restaurants" ON restaurants FOR
+INSERT TO authenticated WITH CHECK (
+        EXISTS (
+            SELECT 1
+            FROM auth.users
+            WHERE auth.uid () = id
+                AND (raw_user_meta_data->>'is_admin')::BOOLEAN = TRUE
+        )
+    );

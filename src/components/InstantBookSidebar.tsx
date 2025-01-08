@@ -27,7 +27,7 @@ interface RestaurantAvailability {
     };
 }
 
-const SPECIAL_VENUE_IDS = ['63241', '456', '789']; // Example venue IDs
+const SPECIAL_VENUE_IDS = ['63241', '1505']; // Example venue IDs
 
 const InstantBookSidebar = () => {
     const [availabilities, setAvailabilities] = useState<RestaurantAvailability[]>([]);

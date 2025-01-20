@@ -85,7 +85,7 @@ const NewRequestPage = () => {
     return (
         <div className="min-h-screen bg-gray-50 text-gray-600">
             <Navbar />
-            <div className="max-w-4xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+            <div className="max-w-4xl mx-auto py-12 px-4 sm:px-6 lg:px-8 mt-16">
                 <Card>
                     <CardHeader>
                         <CardTitle>Create New Reservation Request</CardTitle>
@@ -165,7 +165,7 @@ const NewRequestPage = () => {
                                 <Button
                                     type="button"
                                     onClick={() => router.push('/dashboard')}
-                                    className="bg-gray-100 text-gray-700 hover:bg-gray-200"
+                                    className="bg-red-600 text-gray-700 hover:bg-red-700"
                                 >
                                     Cancel
                                 </Button>

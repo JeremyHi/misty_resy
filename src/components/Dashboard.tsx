@@ -14,13 +14,13 @@ const DeleteConfirmationModal = ({ isOpen, onClose, onConfirm }: { isOpen: boole
 
     return (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-            <div className="bg-white rounded-lg p-6 max-w-sm w-full">
+            <div className="bg-white text-gray-600 rounded-lg p-6 max-w-sm w-full">
                 <h2 className="text-xl font-bold mb-4">Delete Reservation Request</h2>
                 <p className="mb-6">Are you sure you want to delete this reservation request?</p>
                 <div className="flex justify-end space-x-4">
                     <Button
                         onClick={onClose}
-                        className="bg-gray-100 text-gray-700 hover:bg-gray-200"
+                        className="bg-blue-600 text-gray-700 hover:bg-blue-700"
                     >
                         Cancel
                     </Button>
@@ -210,7 +210,7 @@ const Dashboard = () => {
     return (
         <div className="min-h-screen bg-gray-50">
             <Navbar />
-            <div className="py-12 px-4 sm:px-6 lg:px-8">
+            <div className="py-12 px-4 sm:px-6 lg:px-8 mt-16">
                 <div className="max-w-7xl mx-auto">
                     <div className="flex gap-8">
                         {/* Main content area */}

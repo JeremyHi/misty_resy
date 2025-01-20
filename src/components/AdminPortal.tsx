@@ -151,7 +151,7 @@ const AdminPortal = () => {
     }
 
     return (
-        <div className="min-h-screen bg-gray-50 p-6 text-gray-600">
+        <div className="min-h-screen bg-gray-50 p-6 text-gray-600 mt-16">
             <Card className="max-w-6xl mx-auto">
                 <CardHeader className="flex flex-row items-center justify-between">
                     <CardTitle>Restaurant Management</CardTitle>

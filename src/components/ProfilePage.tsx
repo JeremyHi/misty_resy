@@ -151,7 +151,7 @@ const ProfilePage = () => {
     return (
         <div className="min-h-screen bg-gray-50">
             <Navbar />
-            <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+            <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8 mt-16">
                 <div className="space-y-8">
                     {/* Resy Credentials Section */}
                     <Card>
